@@ -1,28 +1,11 @@
 
-data "aws_ami" "joindevops" {
-    owners           = ["973714476881"]
-    most_recent      = true
-    
-    filter {
-        name   = "name"
-        values = ["RHEL-9-DevOps-Practice"]
+locals {
+    ami_id = data.aws_ami.joindevops.id
+    bastion_sg_id = data.aws_ssm_parameter.bastion_sg_id.value
+    public_subnet_id = split("," , data.aws_ssm_parameter.public_subnet_ids.value)[0]
+    common_tags = {
+        Project = var.project_name
+        Environment = var.environment
+        Terraform = "true"
     }
-
-    filter {
-        name   = "root-device-type"
-        values = ["ebs"]
-    }
-
-    filter {
-        name   = "virtualization-type"
-        values = ["hvm"]
-    }
-}
-
-data "aws_ssm_parameter" "bastion_sg_id" {
-  name = "/${var.project_name}/${var.environment}/bastion_sg_id"
-}
-
-data "aws_ssm_parameter" "public_subnet_ids" {
-  name = "/${var.project_name}/${var.environment}/public_subnet_ids"
 }
