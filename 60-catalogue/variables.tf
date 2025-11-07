@@ -7,10 +7,6 @@ variable "environment" {
     default = "dev"
 }
 
-variable "zone_id" {
-    default = "Z0411460DWA5V8S79J5W"
-}
-
 variable "domain_name" {
     default = "yramya.fun"
 }
