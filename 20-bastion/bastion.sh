@@ -1,25 +1,12 @@
+#!/bin/bash
 
-variable "project_name" {
-    default = "roboshop"
-}
+# growing the /home volume for terraform purpose
+growpart /dev/nvme0n1 4
+lvextend -L +30G /dev/mapper/RootVG-homeVol
+xfs_growfs /home
 
-variable "environment" {
-    default = "dev"
-}
+sudo yum install -y yum-utils
+sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+sudo yum -y install terraform
 
-variable "sg_names" {
-    default = [
-        # databases
-        "mongodb", "redis", "mysql", "rabbitmq",
-        # backend
-        "catalogue", "user", "cart", "shipping", "payment",
-        # frontend
-        "frontend",
-        # bastion
-        "bastion",
-        # frontend load balancer
-        "frontend_alb",
-        # Backend ALB
-        "backend_alb"
-    ]
-}
+# sudo lvreduce -r -L 6G /dev/mapper/RootVG-rootVol
