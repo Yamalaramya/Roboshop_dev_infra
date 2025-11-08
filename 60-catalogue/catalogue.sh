@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 component=$1

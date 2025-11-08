@@ -1,4 +1,3 @@
-
 # Create EC2 instance
 resource "aws_instance" "catalogue" {
     ami = local.ami_id
@@ -194,7 +193,7 @@ resource "aws_lb_listener_rule" "catalogue" {
 #     aws_instance.catalogue.id
 #   ]
   
-#   #depends_on = [aws_autoscaling_policy.catalogue]
+#   depends_on = [aws_autoscaling_policy.catalogue]
 #   provisioner "local-exec" {
 #     command = "aws ec2 terminate-instances --instance-ids ${aws_instance.catalogue.id}"
 #   }
